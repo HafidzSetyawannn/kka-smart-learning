@@ -37,7 +37,6 @@
             font-size: 2rem;
         }
 
-
         .input-group-text {
             border-right: 0;
             background-color: #fff;
