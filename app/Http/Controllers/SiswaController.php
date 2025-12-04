@@ -32,7 +32,6 @@ class SiswaController extends Controller
 
     public function store(Request $request)
     {
-        // Validasi input dari form
         $request->validate([
             'nama_siswa' => 'required|string|max:255',
             'nis' => 'required|string|max:255|unique:siswa,nis',
@@ -52,7 +51,6 @@ class SiswaController extends Controller
 
     public function update(Request $request, Siswa $siswa)
     {
-        // Validasi input
         $request->validate([
             'nama_siswa' => 'required|string|max:255',
             'nis' => ['required', 'string', 'max:255', Rule::unique('siswa')->ignore($siswa->id)],

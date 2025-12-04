@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\KelasController;
 use App\Http\Controllers\SiswaController;
+use App\Http\Controllers\MateriController;
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -25,3 +26,7 @@ Route::resource('kelas', KelasController::class)->middleware('auth');
 //Siswa
 Route::resource('siswas', SiswaController::class)->middleware('auth');
 Route::get('/kelas/{kelas}/siswa', [KelasController::class, 'showSiswa'])->name('kelas.siswa.index');
+
+//Materi
+Route::resource('materi', MateriController::class)->middleware('auth');
+Route::get('/kelas/{kelas}/materi', [KelasController::class, 'showMateri'])->name('kelas.materi.index');

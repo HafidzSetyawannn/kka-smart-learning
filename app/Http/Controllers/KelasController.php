@@ -65,4 +65,13 @@ class KelasController extends Controller
             ->with('success', 'Data kelas berhasil dihapus.')
             ->with('alert-type', 'danger');
     }
+
+    public function showMateri(Kelas $kelas)
+    {
+        $materis = $kelas->materi()->latest()->paginate(10);
+
+        $title = 'Daftar Materi';
+
+        return view('pages.materi.index', compact('kelas', 'materis', 'title'));
+    }
 }

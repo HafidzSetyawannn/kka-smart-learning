@@ -6,7 +6,7 @@
                     © <script>
                         document.write(new Date().getFullYear())
                     </script>,
-                    dibuat<i class="fa fa-heart"></i> oleh
+                    dibuat</i> oleh
                     <a href="#" class="font-weight-bold" target="_blank">HafidzSetyawan</a>
                 </div>
             </div>
