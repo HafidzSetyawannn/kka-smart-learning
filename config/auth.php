@@ -40,6 +40,12 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+
+        // [TAMBAHAN] Guard Khusus untuk Siswa
+        'siswa' => [
+            'driver' => 'session',
+            'provider' => 'siswas',
+        ],
     ],
 
     /*
@@ -65,10 +71,11 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        // [TAMBAHAN] Provider Khusus untuk Siswa
+        'siswas' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Siswa::class, // Pastikan model Siswa ada di App\Models
+        ],
     ],
 
     /*
@@ -97,6 +104,16 @@ return [
             'expire' => 60,
             'throttle' => 60,
         ],
+
+        // [OPSIONAL] Jika siswa butuh reset password, tambahkan ini:
+        /*
+        'siswas' => [
+            'provider' => 'siswas',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        */
     ],
 
     /*

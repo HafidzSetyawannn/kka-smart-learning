@@ -7,7 +7,7 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('assets/img/apple-icon.png') }}">
     <link rel="icon" type="image/png" href="{{ asset('assets/img/favicon.png') }}">
     <title>
-        SD Negeri Ngambon 1
+        Login Siswa - SD Negeri Ngambon 1
     </title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -75,42 +75,41 @@
                         <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
                             <div class="card card-plain">
                                 <div class="card-header pb-0 text-start">
-                                    <h4 class="font-weight-bolder">Belajar Yuk!</h4>
-                                    <p class="mb-0">Masukkan nama pengguna dan kata sandimu ya.</p>
+                                    <h4 class="font-weight-bolder text-info">Halo Siswa! 👋</h4>
+                                    <p class="mb-0">Masukkan NIS dan kata sandi kamu ya.</p>
                                 </div>
                                 <div class="card-body">
-                                    <form method="POST" action="{{ route('login') }}">
+                                    {{-- Form mengarah ke route login siswa --}}
+                                    <form method="POST" action="{{ route('siswa.login') }}">
                                         @csrf
+
+                                        {{-- Input NIS --}}
                                         <div class="mb-3 input-group">
-                                            <span class="input-group-text"><i class="fas fa-user"></i></span>
-                                            <input type="text" name="email" class="form-control form-control-lg"
-                                                placeholder="Nama Pengguna" required autofocus>
+                                            <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+                                            <input type="text" name="nis" class="form-control form-control-lg"
+                                                placeholder="Nomor Induk Siswa (NIS)" required autofocus>
                                         </div>
+
+                                        {{-- Input Password --}}
                                         <div class="mb-3 input-group">
                                             <span class="input-group-text"><i class="fas fa-lock"></i></span>
                                             <input type="password" name="password" class="form-control form-control-lg"
                                                 placeholder="Kata Sandi" required>
                                         </div>
+
                                         <div class="text-center">
-                                            <button type="submit" class="btn btn-lg btn-primary w-100 mt-4 mb-0">Ayo
-                                                Masuk!</button>
-                                        </div>
-                                        <div class="text-center mt-3">
-                                            <p class="text-sm">
-                                                Apakah kamu Siswa?
-                                                <a href="{{ route('siswa.login') }}"
-                                                    class="text-info font-weight-bold">Masuk di sini</a>
-                                            </p>
+                                            <button type="submit" class="btn btn-lg btn-info w-100 mt-4 mb-0">Masuk
+                                                Sekarang!</button>
                                         </div>
                                     </form>
                                 </div>
-                                {{-- <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
                                     <p class="mb-4 text-sm mx-auto">
-                                        Belum punya akun?
-                                        <a href="javascript:;"
-                                            class="text-primary text-gradient font-weight-bold">Daftar di sini</a>
+                                        Kamu Guru?
+                                        <a href="{{ route('login') }}"
+                                            class="text-info text-gradient font-weight-bold">Login Guru di sini</a>
                                     </p>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div
@@ -118,13 +117,13 @@
                             <div class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden"
                                 style="background-image: url('{{ asset('assets/img/background-login.png') }}');
                                 background-size: cover;">
-                                <span class="mask bg-gradient-primary opacity-6"></span>
+                                <span class="mask bg-gradient-info opacity-6"></span>
                                 <div class="position-relative text-center">
                                     <h2 class="mt-5 text-white lilita-one-regular" style="font-size: 2.5rem;">
-                                        Selamat Datang!
+                                        Semangat Belajar! 🚀
                                     </h2>
                                     <p class="text-white h5" style="font-family: 'Nunito', sans-serif;">
-                                        Ayo mulai belajar Koding dan Kecerdasan Artifisial jadi lebih seru!
+                                        Jelajahi dunia Koding dan AI dengan cara yang menyenangkan.
                                     </p>
                                 </div>
                             </div>

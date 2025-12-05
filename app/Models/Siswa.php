@@ -3,12 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+// [PENTING] Ganti 'Model' biasa menjadi 'Authenticatable'
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Siswa extends Model
+class Siswa extends Authenticatable // <-- Ubah ini
 {
     use HasFactory;
+
     protected $table = 'siswa';
 
     protected $fillable = [
@@ -16,6 +18,12 @@ class Siswa extends Model
         'nis',
         'no_absen',
         'kelas_id',
+        'password', // <-- Jangan lupa tambahkan ini
+    ];
+
+    // Sembunyikan password saat data diambil
+    protected $hidden = [
+        'password',
     ];
 
     public function kelas(): BelongsTo
