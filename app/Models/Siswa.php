@@ -19,6 +19,7 @@ class Siswa extends Authenticatable // <-- Ubah ini
         'no_absen',
         'kelas_id',
         'password', // <-- Jangan lupa tambahkan ini
+        'avatar',
     ];
 
     // Sembunyikan password saat data diambil
@@ -29,5 +30,10 @@ class Siswa extends Authenticatable // <-- Ubah ini
     public function kelas(): BelongsTo
     {
         return $this->belongsTo(Kelas::class, 'kelas_id', 'id_kelas');
+    }
+
+    public function nilai_kuis()
+    {
+        return $this->hasMany(NilaiKuis::class);
     }
 }

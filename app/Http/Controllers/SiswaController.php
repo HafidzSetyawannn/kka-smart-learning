@@ -13,6 +13,7 @@ class SiswaController extends Controller
     public function index()
     {
         $siswas = Siswa::with('kelas')->latest()->paginate(10);
+        $title = 'Data Semua Siswa';
         return view('pages.siswa.index', compact('siswas'));
     }
 
@@ -25,6 +26,7 @@ class SiswaController extends Controller
             $selectedKelas = Kelas::find($request->query('kelas_id'));
         }
 
+        $title = 'Tambah Siswa';
         return view('pages.siswa.create', [
             'allKelas' => $allKelas,
             'selectedKelas' => $selectedKelas
@@ -55,6 +57,7 @@ class SiswaController extends Controller
     public function edit(Siswa $siswa)
     {
         $kelas = Kelas::all();
+        $title = 'Edit Data Siswa';
         return view('pages.siswa.edit', compact('siswa', 'kelas'));
     }
 

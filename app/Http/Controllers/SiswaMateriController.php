@@ -18,9 +18,10 @@ class SiswaMateriController extends Controller
 
         // 2. Ambil materi yang HANYA untuk kelas siswa tersebut
         $materis = Materi::where('kelas_id', $siswa->kelas_id)
-                         ->latest()
-                         ->paginate(9); // Tampilkan 9 materi per halaman
+            ->latest()
+            ->paginate(9); // Tampilkan 9 materi per halaman
 
+        $title = 'Materi Pembelajaran';
         return view('pages.siswa.materi.index', compact('materis'));
     }
 
@@ -33,9 +34,10 @@ class SiswaMateriController extends Controller
         $siswa = Auth::guard('siswa')->user();
 
         $materi = Materi::where('id', $id)
-                        ->where('kelas_id', $siswa->kelas_id)
-                        ->firstOrFail(); // Jika akses materi kelas lain -> Error 404
+            ->where('kelas_id', $siswa->kelas_id)
+            ->firstOrFail(); // Jika akses materi kelas lain -> Error 404
 
+        $title = $materi->judul; // Judul halaman sesuai judul materi
         return view('pages.siswa.materi.show', compact('materi'));
     }
 }

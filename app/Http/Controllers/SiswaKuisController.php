@@ -23,6 +23,7 @@ class SiswaKuisController extends Controller
             ->latest()
             ->paginate(10);
 
+        $title = 'Latihan Soal';
         return view('pages.siswa.kuis.index', compact('daftarKuis'));
     }
 
@@ -44,6 +45,7 @@ class SiswaKuisController extends Controller
         $kuis = Kuis::with('soal')->findOrFail($id);
         $soalAcak = $kuis->soal->shuffle();
 
+        $title = 'Pengerjaan Kuis';
         return view('pages.siswa.kuis.kerjakan', compact('kuis', 'soalAcak'));
     }
 
@@ -100,6 +102,7 @@ class SiswaKuisController extends Controller
         $kuis = Kuis::findOrFail($id);
         $skor = $request->query('skor');
 
+        $title = 'Hasil Kuis';
         return view('pages.siswa.kuis.hasil', compact('kuis', 'skor'));
     }
 }

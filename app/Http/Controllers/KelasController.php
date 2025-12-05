@@ -10,11 +10,15 @@ class KelasController extends Controller
     public function index()
     {
         $dataKelas = Kelas::latest()->paginate(10);
+        $title = 'Data Kelas';
         return view('pages.kelas.index', compact('dataKelas'));
+
+
     }
 
     public function create()
     {
+        $title = 'Tambah Kelas Baru';
         return view('pages.kelas.create');
     }
 
@@ -34,12 +38,14 @@ class KelasController extends Controller
     public function edit($id_kelas)
     {
         $kelas = Kelas::findOrFail($id_kelas);
+        $title = 'Edit Kelas';
         return view('pages.kelas.edit', compact('kelas'));
     }
 
     public function showSiswa(Kelas $kelas)
     {
         $siswas = $kelas->siswas()->paginate(10);
+        $title = 'Daftar Siswa - ' . $kelas->nama_kelas;
         return view('pages.kelas.siswa', compact('kelas', 'siswas'));
     }
 
