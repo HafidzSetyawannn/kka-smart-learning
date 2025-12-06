@@ -14,27 +14,19 @@ use App\Http\Controllers\Auth\SiswaAuthController;
 use App\Http\Controllers\SiswaKuisController;
 use App\Http\Controllers\SiswaMateriController;
 
-// Import Models
+
 use App\Models\Kelas;
 use App\Models\Siswa;
 use App\Models\Materi;
 use App\Models\Kuis;
 use App\Models\NilaiKuis;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
-
 //Halaman Welcome
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
-// ====================================================
-// BAGIAN AUTHENTICATION (LOGIN)
-// ====================================================
+
 
 // 1. Login Guru (Web Guard)
 Route::middleware('guest')->group(function () {
@@ -48,10 +40,6 @@ Route::middleware('guest:siswa')->group(function () {
     Route::post('/siswa/login', [SiswaAuthController::class, 'login']);
 });
 
-
-// ====================================================
-// BAGIAN GURU / ADMIN (Middleware 'auth')
-// ====================================================
 Route::middleware('auth')->group(function () {
 
     // Logout Guru
@@ -99,11 +87,7 @@ Route::middleware('auth')->group(function () {
                 'time'  => $item->created_at
             ];
         });
-
-        // Gabungkan dan Urutkan
         $activities = $recentMateri->concat($recentKuis)->concat($recentSiswa)->sortByDesc('time')->take(6);
-
-        // Judul Halaman
         $title = 'Dashboard';
 
         return view('pages.dashboard.index', compact('jumlahKelas', 'jumlahSiswa', 'jumlahMateri', 'jumlahKuis', 'activities', 'title'));
@@ -118,16 +102,19 @@ Route::middleware('auth')->group(function () {
 
     // Manajemen Siswa
     Route::resource('siswas', SiswaController::class);
+
     // Route khusus lihat siswa per kelas (dari menu detail kelas)
     Route::get('/kelas/{kelas}/siswa', [KelasController::class, 'showSiswa'])->name('kelas.siswa.index');
 
     // Manajemen Materi
     Route::resource('materi', MateriController::class);
+
     // Route khusus lihat materi per kelas (dari menu detail kelas)
     Route::get('/kelas/{kelas}/materi', [KelasController::class, 'showMateri'])->name('kelas.materi.index');
 
     // Manajemen Kuis & Soal
     Route::resource('kuis', KuisController::class);
+
     // Route khusus untuk menambah/menghapus butir soal (langkah)
     Route::post('/soal-kuis', [SoalKuisController::class, 'store'])->name('soal.store');
     Route::delete('/soal-kuis/{id}', [SoalKuisController::class, 'destroy'])->name('soal.destroy');
@@ -138,10 +125,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/evaluasi/siswa/{siswa}', [EvaluasiController::class, 'detailSiswa'])->name('evaluasi.detail_siswa');
 });
 
-
-// ====================================================
-// BAGIAN SISWA (Middleware 'auth:siswa')
-// ====================================================
 Route::middleware('auth:siswa')->group(function () {
 
     // Logout Siswa
@@ -155,7 +138,7 @@ Route::middleware('auth:siswa')->group(function () {
         $totalMateri = \App\Models\Materi::where('kelas_id', $siswa->kelas_id)->count();
         $kuisSelesai = \App\Models\NilaiKuis::where('siswa_id', $siswa->id)->count();
         $rataRata    = \App\Models\NilaiKuis::where('siswa_id', $siswa->id)->avg('skor');
-        $rataRata    = round($rataRata ?? 0); // Bulatkan, jika null jadi 0
+        $rataRata    = round($rataRata ?? 0);
 
         // 2. Tentukan Badge/Julukan berdasarkan rata-rata nilai
         if ($rataRata >= 90) {
@@ -167,7 +150,6 @@ Route::middleware('auth:siswa')->group(function () {
         } else {
             $badge = ['name' => 'Pendatang Baru 👋', 'color' => 'secondary'];
         }
-
         $title = 'Dashboard Siswa';
 
         return view('pages.siswa.dashboard', compact('title', 'totalMateri', 'kuisSelesai', 'rataRata', 'badge'));
