@@ -71,6 +71,25 @@
     </script>
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <script src="{{ asset('assets/js/argon-dashboard.min.js') }}?v=2.1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmLogout(formId) {
+            Swal.fire({
+                title: 'Yakin ingin keluar?',
+                text: "Sesi Anda akan diakhiri.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#5e72e4', // Warna Primary Argon
+                cancelButtonColor: '#f5365c', // Warna Danger Argon
+                confirmButtonText: 'Ya, Keluar!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById(formId).submit();
+                }
+            })
+        }
+    </script>
 </body>
 
 </html>

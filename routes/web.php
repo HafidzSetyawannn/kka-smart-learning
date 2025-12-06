@@ -27,10 +27,10 @@ use App\Models\NilaiKuis;
 |--------------------------------------------------------------------------
 */
 
-// Redirect root ke login
+//Halaman Welcome
 Route::get('/', function () {
-    return redirect()->route('login');
-});
+    return view('welcome');
+})->name('home');
 
 // ====================================================
 // BAGIAN AUTHENTICATION (LOGIN)

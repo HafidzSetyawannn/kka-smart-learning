@@ -105,17 +105,16 @@
                 </li>
 
                 <li class="nav-item">
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form id="logout-form-guru" method="POST" action="{{ route('logout') }}" style="display: none;">
                         @csrf
-                        <a class="nav-link" href="{{ route('logout') }}"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="ni ni-button-power text-dark text-sm opacity-10"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Logout</span>
-                        </a>
                     </form>
+                    <a class="nav-link" href="#" onclick="confirmLogout('logout-form-guru')">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-button-power text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Keluar</span>
+                    </a>
                 </li>
 
                 {{-- ============================================================== --}}
@@ -164,17 +163,17 @@
                 </li>
 
                 <li class="nav-item">
-                    <form method="POST" action="{{ route('siswa.logout') }}">
+                    <form id="logout-form-siswa" method="POST" action="{{ route('siswa.logout') }}"
+                        style="display: none;">
                         @csrf
-                        <a class="nav-link" href="{{ route('siswa.logout') }}"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                            <div
-                                class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="ni ni-button-power text-dark text-sm opacity-10"></i>
-                            </div>
-                            <span class="nav-link-text ms-1">Keluar</span>
-                        </a>
                     </form>
+                    <a class="nav-link" href="#" onclick="confirmLogout('logout-form-siswa')">
+                        <div
+                            class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-button-power text-dark text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Keluar</span>
+                    </a>
                 </li>
             @endif
 
