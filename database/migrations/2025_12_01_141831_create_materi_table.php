@@ -16,8 +16,9 @@ return new class extends Migration
             $table->foreignId('kelas_id')->constrained('kelas', 'id_kelas')->onDelete('cascade');
             $table->string('judul');
             $table->string('topik')->nullable();
-            $table->enum('tipe', ['video', 'gambar', 'pdf']);
-            $table->string('file_path');
+            $table->enum('tipe', ['video', 'gambar', 'pdf', 'youtube']);
+            $table->string('file_path')->nullable();
+            $table->string('link_youtube')->nullable();
             $table->timestamps();
         });
     }

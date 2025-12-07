@@ -31,22 +31,27 @@ class MateriController extends Controller
         $request->validate([
             'kelas_id' => 'required|exists:kelas,id_kelas',
             'judul' => 'required|string|max:255',
-            'topik' => 'nullable|string|max:255',
-            'tipe' => 'required|in:video,gambar,pdf',
-            'file_materi' => 'required|file|max:51200',
+            'tipe' => 'required|in:video,gambar,pdf,youtube', // Ada youtube
+            // Validasi Kondisional
+            'file_materi' => 'required_if:tipe,video,gambar,pdf|file|max:51200',
+            'link_youtube' => 'required_if:tipe,youtube|nullable|url',
         ]);
 
         $data = $request->all();
 
+        // 1. Jika Upload File
         if ($request->hasFile('file_materi')) {
-            $path = $request->file('file_materi')->store('materi', 'public');
-            $data['file_path'] = $path;
+            $data['file_path'] = $request->file('file_materi')->store('materi', 'public');
+        }
+
+        // 2. Jika Youtube, pastikan file_path null
+        if ($request->tipe == 'youtube') {
+            $data['file_path'] = null;
         }
 
         Materi::create($data);
 
-        return redirect()->route('materi.index')
-            ->with('success', 'Materi berhasil ditambahkan.');
+        return redirect()->route('materi.index')->with('success', 'Materi berhasil ditambahkan.');
     }
 
     public function show(Materi $materi)
@@ -66,27 +71,36 @@ class MateriController extends Controller
     public function update(Request $request, Materi $materi)
     {
         $request->validate([
-            'kelas_id' => 'required|exists:kelas,id_kelas',
             'judul' => 'required|string|max:255',
-            'topik' => 'nullable|string|max:255',
-            'tipe' => 'required|in:video,gambar,pdf',
+            'tipe' => 'required|in:video,gambar,pdf,youtube',
             'file_materi' => 'nullable|file|max:51200',
+            'link_youtube' => 'required_if:tipe,youtube|nullable|url',
         ]);
 
         $data = $request->all();
 
-        if ($request->hasFile('file_materi')) {
+        // Cek Tipe Baru
+        if ($request->tipe == 'youtube') {
+            // Jika ganti ke YouTube, hapus file lama jika ada
             if ($materi->file_path) {
                 Storage::disk('public')->delete($materi->file_path);
             }
-            $path = $request->file('file_materi')->store('materi', 'public');
-            $data['file_path'] = $path;
+            $data['file_path'] = null;
+        } else {
+            // Jika Tipe File (Video/Gambar/PDF)
+            if ($request->hasFile('file_materi')) {
+                if ($materi->file_path) {
+                    Storage::disk('public')->delete($materi->file_path);
+                }
+                $data['file_path'] = $request->file('file_materi')->store('materi', 'public');
+            }
+            // Kosongkan link youtube
+            $data['link_youtube'] = null;
         }
 
         $materi->update($data);
 
-        return redirect()->route('materi.index')
-            ->with('success', 'Materi berhasil diperbarui.');
+        return redirect()->route('materi.index')->with('success', 'Materi berhasil diperbarui.');
     }
 
     public function destroy(Materi $materi)
